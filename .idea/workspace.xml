@@ -91,12 +91,12 @@
       <file leaf-file-name="SwingTable.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SwingTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-275">
-              <caret line="38" column="40" lean-forward="false" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
+            <state relative-caret-position="481">
+              <caret line="80" column="64" lean-forward="true" selection-start-line="80" selection-start-column="64" selection-end-line="80" selection-end-column="64" />
               <folding>
-                <element signature="e#0#12755#0" expanded="true" />
+                <element signature="e#0#11859#0" expanded="true" />
                 <element signature="imports" expanded="true" />
-                <element signature="e#9700#9711#0" expanded="true" />
+                <element signature="e#8804#8815#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -442,12 +442,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SwingTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-275">
-          <caret line="38" column="40" lean-forward="false" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
+        <state relative-caret-position="481">
+          <caret line="80" column="64" lean-forward="true" selection-start-line="80" selection-start-column="64" selection-end-line="80" selection-end-column="64" />
           <folding>
-            <element signature="e#0#12755#0" expanded="true" />
+            <element signature="e#0#11859#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#9700#9711#0" expanded="true" />
+            <element signature="e#8804#8815#0" expanded="true" />
           </folding>
         </state>
       </provider>

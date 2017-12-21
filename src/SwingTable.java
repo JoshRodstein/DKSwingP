@@ -69,30 +69,7 @@ public class SwingTable {
         }
         if (indexBegin > indexEnd) {
             throw new IllegalArgumentException("Begin index: " + indexBegin + ", may not be greater than end index: " + indexEnd);
-        }
 
-        for(int i = indexBegin; i <= indexEnd; i++){
-            value = swingSamples.get(i).getXYZ(data);
-            // if value meets search criteria check if
-            // we are in the middle of a run of continuity.
-            // if not, then i is the first index of new continuity
-            if(value > threshold) {
-                if(foundIndex == -1) {
-                    foundIndex = i;
-                }
-                // if value is not valid, check if we were in a run of cont.
-                // if so and run of cont. was at least winLenght in length, break.
-                // if not, reset index and keep searching
-            } else if (foundIndex != -1){
-                if(i - foundIndex >= winLength){
-                    break;
-                } else {
-                    foundIndex = -1;
-                }
-            }
-        }
-
-        return foundIndex;
     }
 
     /**

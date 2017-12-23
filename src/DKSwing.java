@@ -13,6 +13,7 @@ public class DKSwing {
 
 
     public static void main(String[] args){
+        column data, data2;
         aSwing = null;
         try {
             File swingFile = new File(args[0]);
@@ -20,29 +21,45 @@ public class DKSwing {
         } catch(FileNotFoundException fn) {
             System.err.println("File not found");
         }
-
-        int i = aSwing.searchContinuityAboveValue(column.WX, 1,1200, 1, 20);
+        data = column.WX;
+        int i = aSwing.searchContinuityAboveValue(data, 1,1200, 1, 20);
         if(i == -1){
-            System.out.println("No continuity above value found for sensor WZ");
+            System.out.println("No continuity above value found for sensor " + data);
         } else {
-            System.out.println("From index [1 - 1200] for sensor 'wz', Above Value 1 of length >= " + 20 + "\n\t: Index[" + i + "]");
+            System.out.println("From index [1 - 1200] for sensor "+data+",  \n\tStart Index[" + i + "]\n");
         }
 
-        int x = aSwing.backSearchContinuityWithinRange(column.AX, 860,1, 1,
+        data = column.AX;
+        int x = aSwing.backSearchContinuityWithinRange(data, 860,1, 1,
                 16, 20 );
-        System.out.println("From index [860 - 1] for sensor 'ax', Above Value 1 and below value 16 of length >= 20 \n\t: Index["+x+"]");
-
-        int y = aSwing.searchContinuityAboveValueTwoSignals(column.AX, column.WX, 1, 1200, 0,
-                0, 5);
-        System.out.println("From index [1 - 1200] for sensor 'ax' above value 0 and for sensor wx above value 0, of length >= 5 \n\t: Index["+y+"]");
-
-        ArrayList<IndexPair> testList = aSwing.searchMultiContinuityWithinRange(column.AY, 1, 1200,
-                2, 3, 3);
-
-        System.out.println("All runs of continuous values between 2-3 of length >= 3 from index[1 - 1200]");
-        for(int z = 0; z < testList.size(); z++){
-            System.out.println("\tStart["+testList.get(z).getStartIndex() + "] : End[" + testList.get(z).getEndIndex()+"]");
+        if(i == -1){
+            System.out.println("No continuity within specified range found for sensor " + data);
+        } else {
+            System.out.println("From index [860 - 1] for sensor " + data + ", \n\tStart Index[" + x + "]\n");
         }
+
+        data = column.AX;
+        data2 = column.WX;
+        int y = aSwing.searchContinuityAboveValueTwoSignals(data, data2, 1, 1200, 0,
+                0, 5);
+        if(i == -1){
+            System.out.println("No continuity above values found for sensors " + data + " & " + data2);
+        } else {
+            System.out.println("From index [1 - 1200] for sensor " + data + " \n\tStart Index[" + y + "]\n");
+        }
+
+        data = column.AY;
+        ArrayList<IndexPair> testList = aSwing.searchMultiContinuityWithinRange(data, 1, 1200,
+                2, 3, 3);
+        if(testList == null){
+            System.out.println("No continuity above value found for sensor " + data);
+        } else {
+            System.out.println("All runs of continuous values for sensor "+ data + " from index[1 - 1200]");
+            for(int z = 0; z < testList.size(); z++){
+                System.out.println("\tStart["+testList.get(z).getStartIndex() + "] : End[" + testList.get(z).getEndIndex()+"]");
+            }
+        }
+
 
         System.exit(0);
 

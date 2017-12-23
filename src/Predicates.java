@@ -9,7 +9,6 @@ public class Predicates
 {
 
     public static Predicate<SwingSample> isAboveValue(column data, double value){
-        System.out.println(data +" "+value);
         return p -> p.getXYZ(data) > value;
     }
 

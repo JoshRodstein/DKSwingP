@@ -52,7 +52,7 @@ public class SwingTable {
     }
     public ArrayList<IndexPair> filterData (List<SwingSample> sampleList, Predicate<SwingSample> predicate,
                                                    int runLength) {
-        // returns all occurances (not continuous runs)
+        // returns all occurrences (not continuous runs)
         ArrayList<SwingSample> filterList = new ArrayList<>();
         filterList = sampleList.stream().filter(predicate).collect(Collectors.toCollection(ArrayList::new));
 
@@ -83,7 +83,7 @@ public class SwingTable {
         if(indexList.size() == 0){
             return null;
         }
-        System.out.println(indexList.size());
+
         return indexList;
 
     }
@@ -202,7 +202,7 @@ public class SwingTable {
         }
 
         return filterData(swingSamples.subList(indexBegin, indexEnd), Predicates.isBetweenValues(data, thresholdLo, thresholdHi), winLength);
-        
+
     }
 
 
@@ -213,29 +213,13 @@ public class SwingTable {
      * @param indexEnd - Index at which to end printing/iteration
      * @throws IndexOutOfBoundsException if either index is outside of sample data bounds
      */
-    public void printSwing(int indexBegin, int indexEnd){
+    public void printSwing(ArrayList<SwingSample> s, int indexBegin, int indexEnd){
 
         if(indexBegin < 1 || indexEnd > swingSamples.size()){
             throw new IndexOutOfBoundsException("Invalid index values " + indexBegin + ", " + indexEnd);
         }
 
         for(int i = indexBegin; i < indexEnd; i++){
-            System.out.println();
-            System.out.print(swingSamples.get(i).getXYZ(column.TIMESTAMP));
-            System.out.print(", " + swingSamples.get(i).getXYZ(column.AX));
-            System.out.print(", " + swingSamples.get(i).getXYZ(column.AY));
-            System.out.print(", " + swingSamples.get(i).getXYZ(column.AZ));
-            System.out.print(", " + swingSamples.get(i).getXYZ(column.WX));
-            System.out.print(", " + swingSamples.get(i).getXYZ(column.WY));
-            System.out.print(", " + swingSamples.get(i).getXYZ(column.WZ));
-        }
-    }
-
-
-    public void printSwing(ArrayList<SwingSample> s){
-
-
-        for(int i = 0; i < s.size(); i++){
             System.out.println();
             System.out.print(s.get(i).getXYZ(column.TIMESTAMP));
             System.out.print(", " + s.get(i).getXYZ(column.AX));

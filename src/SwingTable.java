@@ -50,7 +50,7 @@ public class SwingTable {
             indexMap.put(sample.getTimestamp(), swingSamples.size());
         }
     }
-    public ArrayList<IndexPair> filterData (List<SwingSample> sampleList, Predicate<SwingSample> predicate,
+    public ArrayList<IndexPair> filterData(List<SwingSample> sampleList, Predicate<SwingSample> predicate,
                                                    int runLength) {
         // returns all occurrences (not continuous runs)
         ArrayList<SwingSample> filterList = new ArrayList<>();
@@ -68,12 +68,12 @@ public class SwingTable {
         for(int i = 0; i < size; i++) {
             if(filterList.get(i+1).getIndex() - filterList.get(i).getIndex() == 1) {
                 if(i+1 == size){
-                    indexList.add(new  IndexPair(found, filterList.get(i).getIndex()) );
+                    indexList.add(new IndexPair(found, filterList.get(i+1).getIndex()));
                 }
                 count++;
             } else {
                 if(count >= runLength){
-                    indexList.add(new  IndexPair(found, filterList.get(i).getIndex()) );
+                    indexList.add(new IndexPair(found, filterList.get(i).getIndex()));
                 }
                 count = 1;
                 found = filterList.get(i + 1).getIndex();
@@ -143,7 +143,7 @@ public class SwingTable {
             return -1;
         }
 
-        return results.get(results.size()-1).getStartIndex();
+        return results.get(results.size()-1).getEndIndex();
 
     }
 

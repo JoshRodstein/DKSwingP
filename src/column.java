@@ -6,6 +6,6 @@ public enum column{
     AZ,
     WX,
     WY,
-    WZ,
+    WZ
 
 }

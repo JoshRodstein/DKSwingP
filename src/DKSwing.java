@@ -21,10 +21,11 @@ public class DKSwing {
         } catch(FileNotFoundException fn) {
             System.err.println("File not found");
         }
-        data = column.WX;
+
+        data = column.WZ;
         int i = aSwing.searchContinuityAboveValue(data, 1,1200, 1, 20);
         if(i == -1){
-            System.out.println("No continuity above value found for sensor " + data);
+            System.out.println("No continuity above value found for sensor " + data + "\n");
         } else {
             System.out.println("From index [1 - 1200] for sensor "+data+",  \n\tStart Index[" + i + "]\n");
         }
@@ -32,8 +33,8 @@ public class DKSwing {
         data = column.AX;
         int x = aSwing.backSearchContinuityWithinRange(data, 860,1, 1,
                 16, 20 );
-        if(i == -1){
-            System.out.println("No continuity within specified range found for sensor " + data);
+        if(x == -1){
+            System.out.println("No continuity within specified range found for sensor " + data + "\n");
         } else {
             System.out.println("From index [860 - 1] for sensor " + data + ", \n\tStart Index[" + x + "]\n");
         }
@@ -42,8 +43,8 @@ public class DKSwing {
         data2 = column.WX;
         int y = aSwing.searchContinuityAboveValueTwoSignals(data, data2, 1, 1200, 0,
                 0, 5);
-        if(i == -1){
-            System.out.println("No continuity above values found for sensors " + data + " & " + data2);
+        if(y == -1){
+            System.out.println("No continuity above values found for sensors " + data + " & " + data2 + "\n");
         } else {
             System.out.println("From index [1 - 1200] for sensor " + data + " \n\tStart Index[" + y + "]\n");
         }
@@ -52,7 +53,7 @@ public class DKSwing {
         ArrayList<IndexPair> testList = aSwing.searchMultiContinuityWithinRange(data, 1, 1200,
                 2, 3, 3);
         if(testList == null){
-            System.out.println("No continuity above value found for sensor " + data);
+            System.out.println("No continuity above value found for sensor " + data + "\n");
         } else {
             System.out.println("All runs of continuous values for sensor "+ data + " from index[1 - 1200]");
             for(int z = 0; z < testList.size(); z++){

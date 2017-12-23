@@ -54,9 +54,12 @@ public class SwingTable {
                                                    int runLength) {
         // returns all occurrences (not continuous runs)
         ArrayList<SwingSample> filterList = new ArrayList<>();
-        filterList = sampleList.stream().filter(predicate).collect(Collectors.toCollection(ArrayList::new));
+        filterList = sampleList
+                .stream()
+                .filter(predicate)
+                .collect(Collectors.toCollection(ArrayList::new));
 
-        int count = 1, found = 0;
+        int count = 1, found;
         int size = filterList.size() - 1;
         ArrayList<IndexPair> indexList = new ArrayList<IndexPair>();
 
@@ -83,7 +86,7 @@ public class SwingTable {
         if(indexList.size() == 0){
             return null;
         }
-
+        //printSwing(filterList,0, filterList.size());
         return indexList;
 
     }
@@ -113,6 +116,8 @@ public class SwingTable {
         if(results == null){
             return -1;
         }
+
+
         return results.get(0).getStartIndex();
     }
 
@@ -215,7 +220,7 @@ public class SwingTable {
      */
     public void printSwing(ArrayList<SwingSample> s, int indexBegin, int indexEnd){
 
-        if(indexBegin < 1 || indexEnd > swingSamples.size()){
+        if(indexBegin < 0 || indexEnd > s.size()){
             throw new IndexOutOfBoundsException("Invalid index values " + indexBegin + ", " + indexEnd);
         }
 

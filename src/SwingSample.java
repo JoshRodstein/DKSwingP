@@ -53,7 +53,7 @@ public class SwingSample {
             return this.wX;
         } else if(data == column.WY){
             return this.wY;
-        } else if(data == column.WX) {
+        } else if(data == column.WZ) {
             return this.wZ;
         } else {
             return 0;

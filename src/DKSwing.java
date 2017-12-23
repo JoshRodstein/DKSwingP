@@ -22,8 +22,11 @@ public class DKSwing {
         }
 
         int i = aSwing.searchContinuityAboveValue(column.WZ, 1,1200, 1, 20);
-        System.out.println("From index [1 - 1200] for sensor 'wz', Above Value 1 of length >= " + 20 + "\n\t: Index["+i+"]");
-
+        if(i == -1){
+            System.out.println("No continuity above value found for sensor WZ");
+        } else {
+            System.out.println("From index [1 - 1200] for sensor 'wz', Above Value 1 of length >= " + 20 + "\n\t: Index[" + i + "]");
+        }
         int x = aSwing.backSearchContinuityWithinRange(column.AX, 860,1, 1,
                 16, 20 );
         System.out.println("From index [860 - 1] for sensor 'ax', Above Value 1 and below value 16 of length >= 20 \n\t: Index["+x+"]");

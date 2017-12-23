@@ -63,13 +63,20 @@ public class SwingTable {
                                           double threshold, int winLength){
         int foundIndex = -1;
         double value = 0;
+        ArrayList<IndexPair> results;
 
         if(indexBegin < 0 || indexEnd > swingSamples.size()){
             throw new IndexOutOfBoundsException("Index values must be within bounds of sample set");
         }
         if (indexBegin > indexEnd) {
             throw new IllegalArgumentException("Begin index: " + indexBegin + ", may not be greater than end index: " + indexEnd);
+        }
 
+        results = Predicates.filterData(swingSamples.subList(1, indexEnd), Predicates.isAboveValue(data, threshold), winLength);
+        if(results == null){
+            return -1;
+        }
+        return results.get(0).getEndIndex();
     }
 
     /**

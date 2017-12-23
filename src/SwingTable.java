@@ -25,7 +25,6 @@ public class SwingTable {
     private SwingSample sample;
     private Scanner scan;
 
-
     public SwingTable(File swingData) throws FileNotFoundException{
         scan = new Scanner(swingData);
         swingSamples = new ArrayList<SwingSample>();
@@ -50,6 +49,7 @@ public class SwingTable {
             indexMap.put(sample.getTimestamp(), swingSamples.size());
         }
     }
+
     public ArrayList<IndexPair> filterData(List<SwingSample> sampleList, Predicate<SwingSample> predicate,
                                                    int runLength) {
         // returns all occurrences (not continuous runs)
@@ -112,7 +112,7 @@ public class SwingTable {
             throw new IllegalArgumentException("Begin index: " + indexBegin + ", may not be greater than end index: " + indexEnd);
         }
 
-        results = filterData(swingSamples.subList(indexBegin, indexEnd), Predicates.isAboveValue(data, threshold), winLength);
+        results = filterData(swingSamples.subList(indexBegin, indexEnd), SamplePredicates.isAboveValue(data, threshold), winLength);
         if(results == null){
             return -1;
         }
@@ -142,7 +142,7 @@ public class SwingTable {
             throw new IllegalArgumentException("End index: " + indexEnd + ", may not be greater than begin index: " + indexBegin);
         }
 
-        results = filterData(swingSamples.subList(indexEnd, indexBegin), Predicates.isBetweenValues(data, thresholdLo, thresholdHi), winLength);
+        results = filterData(swingSamples.subList(indexEnd, indexBegin), SamplePredicates.isBetweenValues(data, thresholdLo, thresholdHi), winLength);
 
         if(results == null){
             return -1;
@@ -174,8 +174,8 @@ public class SwingTable {
             throw new IllegalArgumentException("Begin index: " + indexBegin + ", may not be greater than end index: " + indexEnd);
         }
 
-        results = filterData(swingSamples.subList(indexBegin, indexEnd), Predicates.isAboveValue(data1, threshold1)
-                .and(Predicates.isAboveValue(data2, threshold2)), winLength);
+        results = filterData(swingSamples.subList(indexBegin, indexEnd), SamplePredicates.isAboveValue(data1, threshold1)
+                .and(SamplePredicates.isAboveValue(data2, threshold2)), winLength);
 
         if(results == null){
             return -1;
@@ -206,7 +206,7 @@ public class SwingTable {
             throw new IllegalArgumentException("Begin index: " + indexBegin + ", may not be greater than end index: " + indexEnd);
         }
 
-        return filterData(swingSamples.subList(indexBegin, indexEnd), Predicates.isBetweenValues(data, thresholdLo, thresholdHi), winLength);
+        return filterData(swingSamples.subList(indexBegin, indexEnd), SamplePredicates.isBetweenValues(data, thresholdLo, thresholdHi), winLength);
 
     }
 

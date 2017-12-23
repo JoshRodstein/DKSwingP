@@ -1,7 +1,7 @@
 import java.util.function.Predicate;
 
 
-public class Predicates
+public class SamplePredicates
 {
 
     public static Predicate<SwingSample> isAboveValue(column data, double value){

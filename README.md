@@ -24,7 +24,9 @@
   Returns an ArrayList of IndexPair objects representing all contiguous runs of
   valid samples. 
    
-    ***filterData()***
+    **filterData() - **
+        uses *Java.util.stream* and passed predicate param to populate a list with all samples meeting 
+        the search criteria. 
 # Notes 
   -Currently SwingTable indices start at 1 to mirror logical indexing of csv spreadsheet.<br /><br />
   -csv file contains proprietary data, not included in public repo.  

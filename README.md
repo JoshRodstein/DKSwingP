@@ -19,6 +19,9 @@
   Object represents starting and ending index of continuous runs of values. 
   Allows for return of multiple indices. 
   
+**Column.java** <br />
+  Enum class defining reference variables for sensor data of SwingSample object.
+  
 **SamplePredicates.java** <br />
   Predicate class containing 2 static Predicates and a static filtering method.
   Returns an ArrayList of IndexPair objects representing all contiguous runs of

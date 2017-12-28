@@ -24,10 +24,11 @@
   Returns an ArrayList of IndexPair objects representing all contiguous runs of
   valid samples. 
    
-    **filterData() - **
+     **filterData()**
         uses *Java.util.stream* and passed predicate param to populate a list with all samples meeting 
         the search criteria. Filtered data is then iterated over to locate runs of adjacency matching
         the desired length. Runs are stored as IndexPairs and returned as an ArrayList. 
+   
      
 # Notes 
   -Currently SwingTable indices start at 1 to mirror logical indexing of csv spreadsheet.<br /><br />

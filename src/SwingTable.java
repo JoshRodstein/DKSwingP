@@ -28,11 +28,8 @@ public class SwingTable {
     public SwingTable(File swingData) throws FileNotFoundException{
         scan = new Scanner(swingData);
         swingSamples = new ArrayList<SwingSample>();
-        indexMap = new HashMap<Integer, Integer>();
-
         // add null object to index 0, making arraylist base 1
         // to mirror logical indexing of csv in spreadsheet.
-        // Parse file and populate swingSamples in parralel with indexMap
         swingSamples.add(null);
         while(scan.hasNextLine()){
             String[] row = scan.nextLine().split(",");
@@ -46,73 +43,37 @@ public class SwingTable {
                     Double.parseDouble(row[5]),
                     Double.parseDouble(row[6]));
             swingSamples.add(sample);
-            indexMap.put(sample.getTimestamp(), swingSamples.size());
         }
     }
 
-    public ArrayList<IndexPair> filterData(List<SwingSample> sampleList, Predicate<SwingSample> predicate,
-                                                   int runLength) {
-        // returns all occurrences (not continuous runs)
-        ArrayList<SwingSample> filterList = new ArrayList<>();
-        filterList = sampleList
-                .stream()
-                .filter(predicate)
-                .collect(Collectors.toCollection(ArrayList::new));
-
-        int count = 1, found;
-        int size = filterList.size() - 1;
-        ArrayList<IndexPair> indexList = new ArrayList<IndexPair>();
-
-        if (size <= 0){
-            return null;
+    public void validateRange(int indexBegin, int indexEnd) {
+        if (indexBegin < 1 || indexEnd > swingSamples.size()) {
+            throw new IndexOutOfBoundsException("Index values must be within bounds of sample set");
         }
 
-        found = filterList.get(0).getIndex();
-        for(int i = 0; i < size; i++) {
-            if(filterList.get(i+1).getIndex() - filterList.get(i).getIndex() == 1) {
-                if(i+1 == size){
-                    indexList.add(new IndexPair(found, filterList.get(i+1).getIndex()));
-                }
-                count++;
-            } else {
-                if(count >= runLength){
-                    indexList.add(new IndexPair(found, filterList.get(i).getIndex()));
-                }
-                count = 1;
-                found = filterList.get(i + 1).getIndex();
-            }
+        if (indexBegin > indexEnd) {
+            throw new IllegalArgumentException("Illegal index range - Check function params: "
+                    + indexBegin + " : " + indexEnd);
         }
-
-        if(indexList.size() == 0){
-            return null;
-        }
-        //printSwing(filterList,0, filterList.size());
-        return indexList;
-
     }
 
     /**
      * <P>from indexBegin to indexEnd, search data for values that are higher than threshold.
      * Return the first index where data has values that meet this criteria for at least winLength samples.
      *
-     * @return int - first(lowest) index of first continuous run of qualifying values of at least winLength.
-     * @return -1 if no continuities of size winLength are found
+     * @return int|-1 first(lowest) index of first continuous run of qualifying values of at least winLength.
+     *  -1 if no continuities of size winLength are found
      * @throws IndexOutOfBoundsException if either indexBegin or indexEnd is outside bounds of sample set
      * @throws IllegalArgumentException if indexBegin is greater than indexEnd
      * */
     public int searchContinuityAboveValue(column data, int indexBegin, int indexEnd,
                                           double threshold, int winLength){
-
         ArrayList<IndexPair> results;
 
-        if(indexBegin < 0 || indexEnd > swingSamples.size()){
-            throw new IndexOutOfBoundsException("Index values must be within bounds of sample set");
-        }
-        if (indexBegin > indexEnd) {
-            throw new IllegalArgumentException("Begin index: " + indexBegin + ", may not be greater than end index: " + indexEnd);
-        }
+        validateRange(indexBegin, indexEnd);
 
-        results = filterData(swingSamples.subList(indexBegin, indexEnd), SamplePredicates.isAboveValue(data, threshold), winLength);
+        results = SamplePredicates.filterData(swingSamples.subList(indexBegin, indexEnd), SamplePredicates
+                .isAboveValue(data, threshold), winLength);
         if(results == null){
             return -1;
         }
@@ -135,15 +96,10 @@ public class SwingTable {
                                                double thresholdLo, double thresholdHi, int winLength) {
         ArrayList<IndexPair> results;
 
-        if(indexBegin < 1 || indexEnd > swingSamples.size()){
-            throw new IndexOutOfBoundsException("Index values must be within bounds of sample set");
-        }
-        if (indexBegin < indexEnd) {
-            throw new IllegalArgumentException("End index: " + indexEnd + ", may not be greater than begin index: " + indexBegin);
-        }
+        validateRange(indexEnd, indexBegin);
 
-        results = filterData(swingSamples.subList(indexEnd, indexBegin), SamplePredicates.isBetweenValues(data, thresholdLo, thresholdHi), winLength);
-
+        results = SamplePredicates.filterData(swingSamples.subList(indexEnd, indexBegin), SamplePredicates
+                .isBetweenValues(data, thresholdLo, thresholdHi), winLength);
         if(results == null){
             return -1;
         }
@@ -166,15 +122,9 @@ public class SwingTable {
                                                     int indexEnd, double threshold1, double threshold2, int winLength){
         ArrayList<IndexPair> results;
 
-        if(indexBegin < 1 || indexEnd > swingSamples.size()){
-            throw new IndexOutOfBoundsException("Index values must be within bounds of sample set");
-        }
+        validateRange(indexBegin, indexEnd);
 
-        if (indexBegin > indexEnd) {
-            throw new IllegalArgumentException("Begin index: " + indexBegin + ", may not be greater than end index: " + indexEnd);
-        }
-
-        results = filterData(swingSamples.subList(indexBegin, indexEnd), SamplePredicates.isAboveValue(data1, threshold1)
+        results = SamplePredicates.filterData(swingSamples.subList(indexBegin, indexEnd), SamplePredicates.isAboveValue(data1, threshold1)
                 .and(SamplePredicates.isAboveValue(data2, threshold2)), winLength);
 
         if(results == null){
@@ -197,16 +147,10 @@ public class SwingTable {
      * */
     public ArrayList<IndexPair> searchMultiContinuityWithinRange(column data, int indexBegin, int indexEnd,
                                                                  double thresholdLo, double thresholdHi, int winLength){
-        ArrayList<IndexPair> results;
+        validateRange(indexBegin, indexEnd);
 
-        if(indexBegin < 1 || indexEnd > swingSamples.size()){
-            throw new IndexOutOfBoundsException("Index values must be within bounds of sample set");
-        }
-        if (indexBegin > indexEnd) {
-            throw new IllegalArgumentException("Begin index: " + indexBegin + ", may not be greater than end index: " + indexEnd);
-        }
-
-        return filterData(swingSamples.subList(indexBegin, indexEnd), SamplePredicates.isBetweenValues(data, thresholdLo, thresholdHi), winLength);
+        return SamplePredicates.filterData(swingSamples.subList(indexBegin, indexEnd), SamplePredicates
+                .isBetweenValues(data, thresholdLo, thresholdHi), winLength);
 
     }
 
@@ -220,9 +164,7 @@ public class SwingTable {
      */
     public void printSwing(ArrayList<SwingSample> s, int indexBegin, int indexEnd){
 
-        if(indexBegin < 0 || indexEnd > s.size()){
-            throw new IndexOutOfBoundsException("Invalid index values " + indexBegin + ", " + indexEnd);
-        }
+        validateRange(indexEnd, indexBegin);
 
         for(int i = indexBegin; i < indexEnd; i++){
             System.out.println();

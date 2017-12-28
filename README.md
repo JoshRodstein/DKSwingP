@@ -20,8 +20,11 @@
   Allows for return of multiple indices. 
   
 **SamplePredicates.java** <br />
-  
-
+  Predicate class containing 2 static Predicates and a static filtering method.
+  Returns an ArrayList of IndexPair objects representing all contiguous runs of
+  valid samples. 
+   
+    ***filterData()***
 # Notes 
   -Currently SwingTable indices start at 1 to mirror logical indexing of csv spreadsheet.<br /><br />
   -csv file contains proprietary data, not included in public repo.  

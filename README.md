@@ -25,9 +25,10 @@
   valid samples. 
    
      filterData()
-        uses *Java.util.stream* and passed predicate param to populate a list with all samples meeting 
-        the search criteria. Filtered data is then iterated over to locate runs of adjacency matching
-        the desired length. Runs are stored as IndexPairs and returned as an ArrayList. 
+  
+     uses *Java.util.stream* and passed predicate param to populate a list with all samples meeting 
+     the search criteria. Filtered data is then iterated over to locate runs of adjacency matching
+     the desired length. Runs are stored as IndexPairs and returned as an ArrayList. 
    
      
 # Notes 

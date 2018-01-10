@@ -1,8 +1,8 @@
 # DKSwingP
 **Solution to Diamond Kinetics problem set using Java Predicates**<br />
  1.Implement data structure for sample swing data in 'latestSwing.csv'<br /><br />
- 2.Implement 4 methods for searching continuous values
- 3.Modify previous solution in DKSwing using Java predicates to improve code re-use. 
+ 2.Implement 4 methods for searching continuous values<br /><br />
+ 3.Modify previous solution in DKSwing using Java predicates to improve code re-use and readability. 
 
 # Description:
 **SwingTable.java-** <br />
